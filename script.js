@@ -1,17 +1,23 @@
-const urlBase = `https://jsonplaceholder.typicode.com/posts`;
+const urlPosts = 'https://dummyjson.com/posts';
+const urlUsers = 'https://dummyjson.com/users';
+const urlProducts = 'https://dummyjson.com/carts';
+
+/******** POSTS **********/
+
 let posts = [];
 const form = document.getElementById('postForm');
 
 function getData() {
-    fetch(urlBase)
+    fetch(urlPosts)
         .then((res) => res.json())
         .then((data) => {
-            posts = data;
+            posts = data.posts;
             renderPostList();
         }).catch((error) => console.log('Error al llamar a la API: ', error))
 };
 
 getData();
+
 
 function renderPostList() {
     const postList = document.getElementById('postList');
@@ -20,17 +26,19 @@ function renderPostList() {
     posts.forEach(post => {
         const listItem = document.createElement('li');
         listItem.classList.add('postItem');
-        listItem.innerHTML = `
-        
+        listItem.innerHTML =
+            `
         <strong>${post.title}</strong>
         <p>${post.body}</p>
+        <div class="likes"><i class="ri-thumb-up-line likes" onclick="reactions(${post.id}, ${post.reactions.likes}, 'likes')"></i><span>${post.reactions.likes}<span></div>
+        <div class="dislikes"><i class="ri-thumb-down-line dislikes" onclick="reactions(${post.id}, ${post.reactions.dislikes}, 'dislikes')"></i><span>${post.reactions.dislikes}<span></div>
         <button onclick="editPost(${post.id})">Editar</button>
         <button onclick="deletePost(${post.id})">Borrar</button>
 
         <div id="editForm-${post.id}" class="editForm" style="display:none">
-            <label for="editTitle">Título: </label>
+            <label for="editTitle-${post.id}">Título: </label>
             <input type="text" id="editTitle-${post.id}" value="${post.title}" required>
-            <label for="editBody">Comentario: </label>
+            <label for="editBody-${post.id}">Comentario: </label>
             <textarea id="editBody-${post.id}" required>${post.body}</textarea>
             <button onclick="updatePost(${post.id})">Actualizar</button>        
         </div>
@@ -39,6 +47,40 @@ function renderPostList() {
         postList.appendChild(listItem);
     })
 };
+
+
+let newLike = 0;
+
+function reactions(id, post, reaction) {
+    const icon = document.querySelector(`.${reaction}`)
+    icon.classList.toggle('icon_reaction');
+
+    newLike = post + 1;
+    console.log(newLike)
+    fetch(`${urlPosts}/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            id: id,
+            userId: 1,
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+        .then(res => res.json())
+        .then(data => {
+            const index = posts.findIndex(post => post.id === data.id)
+            if (index != -1) {
+                posts[index].reactions[reaction] = newLike;
+            } else {
+                alert('Hubo un error al actualizar la información del posteo')
+            }
+
+            renderPostList();
+        })
+        .catch(error => console.error('Error al querer actualizar el posteo: ', error))
+}
+
 
 form.addEventListener('submit', function postData(event) {
     event.preventDefault();
@@ -52,20 +94,24 @@ form.addEventListener('submit', function postData(event) {
         return
     }
 
-    fetch(urlBase, {
+    fetch(`${urlPosts}/add`, {
         method: 'POST',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
         body: JSON.stringify({
             title: postTitle,
             body: postBody,
             userId: 1,
+            reactions: {
+                likes: 0,
+                dislikes: 0
+            }
         }),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        },
     })
         .then((res) => res.json())
         .then((data) => {
-            data.id = posts.length+1;
+            data.id = posts.length + 1;
             posts.unshift(data)
             renderPostList();
             postTitleInput.value = '';
@@ -73,6 +119,7 @@ form.addEventListener('submit', function postData(event) {
         })
         .catch(error => console.error('Error al querer crear el posteo: ', error))
 });
+
 
 function editPost(id) {
     const editForm = document.getElementById(`editForm-${id}`);
@@ -83,7 +130,7 @@ function updatePost(id) {
     const editTitle = document.getElementById(`editTitle-${id}`).value;
     const editBody = document.getElementById(`editBody-${id}`).value;
 
-    fetch(`${urlBase}/${id}`, {
+    fetch(`${urlPosts}/${id}`, {
         method: 'PUT',
         body: JSON.stringify({
             id: id,
@@ -109,7 +156,7 @@ function updatePost(id) {
 };
 
 function deletePost(id) {
-    fetch(`${urlBase}/${id}`, {
+    fetch(`${urlPosts}/${id}`, {
         method: 'DELETE',
     })
         .then(res => {
@@ -122,3 +169,97 @@ function deletePost(id) {
         })
         .catch(error => console.error('Hubo un error: ', error))
 };
+
+
+
+/******** CONTACTS **********/
+
+let contact = [];
+
+function getContacts() {
+    fetch(urlUsers)
+        .then(res => res.json())
+        .then(data => {
+            contact = data.users
+            renderContacts()
+        })
+    return contact
+}
+
+function renderContacts() {
+    const contacList = document.querySelector('#contactsList');
+    contacList.innerHTML = '';
+
+    contact.forEach(contact => {
+        let li = document.createElement('li');
+        li.innerHTML = `
+            <div class="div_contacts">
+            <p style="padding-bottom:8px">${contact.firstName}  ${contact.lastName}</p> 
+            <span class="conect"></span>
+            </div>
+        `
+
+        contacList.append(li)
+    })
+}
+
+getContacts()
+
+
+
+/******** PUBLICIDAD **********/
+
+let random = Math.round(Math.random() * 29)
+let path = []
+
+const sectionImages = document.querySelector('.publicity');
+
+function getProducts() {
+    fetch(urlProducts)
+        .then(res => res.json())
+        .then(data => {
+            path = data.carts[random].products;
+            renderProducts()
+        })
+}
+
+function renderProducts() {
+    const productList = document.querySelector('#productsList')
+    productList.innerHTML = ''
+
+    path.forEach(prod => {
+        const li = document.createElement('li')
+        li.classList.add('productItem')
+        li.innerHTML = `
+        <div class="div_publicity">
+        <img style="width:100px margin:auto" src=${prod.thumbnail}>
+        <p>usd ${prod.price}</p>
+        <button>Comprar</button>
+        </div>
+        `
+        productList.appendChild(li)
+    })
+}
+
+getProducts()
+
+
+/******** BUSCAR **********/
+
+const inputSearch = document.querySelector('#nav_search');
+const results = document.querySelector('.results');
+results.style.display = 'none';
+
+inputSearch.addEventListener('keyup', () => {
+    const seachValue = inputSearch.value;
+    getContacts()
+    let contactsList = contact.map(cont => `${cont.firstName} ${cont.lastName}`);
+    let filter = contactsList.filter(contact => contact.includes(seachValue));
+    if (seachValue !== '') {
+        results.style.display = 'block';
+        results.textContent = filter;
+    } else {
+        results.textContent = '';
+        results.style.display = 'none';
+    }
+})

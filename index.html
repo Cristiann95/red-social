@@ -10,21 +10,42 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
 
 <body>
 
-    <h1>Red Social</h1>
-    <h2>¿Qué estás pensando?</h2>
-    <form id="postForm">
-        <label for="postTitle">Título:</label>
-        <input type="text" id="postTitle" required>
-        <label for="postBody">Comentario: </label>
-        <textarea type="text" id="postBody" required></textarea>
-        <button type="submit">Enviar</button>
-    </form>
-    <ul id="postList"></ul>
+    <header>
+        <nav class="navBar">
+            <h1>Red Social</h1>
+            <form class="searchForm">
+                <img class="iconSearch" src="./assets/bx-search-alt.svg" alt="Buscar">
+                <input class="nav_search" type="search" name="search" id="nav_search" placeholder="Buscar contacto">
+                <div class="results"></div>
+            </form>
+        </nav>
+    </header>
+    <section class="container">
+        <aside class="publicity">
+            <h3>Publicidad</h3>
+            <ul id="productsList"></ul>
+        </aside>
+        <section class="postSection">
+            <h2>¿Qué estás pensando?</h2>
+            <form id="postForm">
+                <label for="postTitle">Título:</label>
+                <input type="text" id="postTitle" required>
+                <label for="postBody">Comentario: </label>
+                <textarea type="text" id="postBody" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+            <ul id="postList"></ul>
+        </section>
+        <section class="contactSection">
+            <h3>Contactos</h3>
+            <ul id="contactsList"></ul>
+        </section>
+    </section>
 
     <script src="script.js"></script>
 </body>
