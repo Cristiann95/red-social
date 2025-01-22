@@ -13,10 +13,12 @@ function getData() {
         .then((data) => {
             posts = data.posts;
             renderPostList();
+            getUser();
         }).catch((error) => console.log('Error al llamar a la API: ', error))
 };
 
 getData();
+
 
 
 function renderPostList() {
@@ -249,17 +251,56 @@ getProducts()
 const inputSearch = document.querySelector('#nav_search');
 const results = document.querySelector('.results');
 results.style.display = 'none';
+const ulResults = document.createElement('ul');
 
 inputSearch.addEventListener('keyup', () => {
     const seachValue = inputSearch.value;
     getContacts()
     let contactsList = contact.map(cont => `${cont.firstName} ${cont.lastName}`);
     let filter = contactsList.filter(contact => contact.includes(seachValue));
+    ulResults.append(filter);
+
     if (seachValue !== '') {
         results.style.display = 'block';
-        results.textContent = filter;
+        results.textContent = filter.join(', ');
     } else {
         results.textContent = '';
         results.style.display = 'none';
     }
 })
+
+/******** USUARIO **********/
+
+const divUser = document.querySelector('.user');
+
+function getUser() {
+    const userName = localStorage.getItem('name');
+    const userEmail = localStorage.getItem('email');
+    const dataUser = document.querySelector('.dataUser');
+    const closeButton = document.querySelector('.ri-close-large-line');
+    const divSession = document.querySelector('.userSession');
+    const firstLetter = userName[0].toUpperCase();
+    divUser.textContent = firstLetter;
+    dataUser.innerHTML = `<b>Usuario:</b>  ${userName} <br> <b>Email:</b>  ${userEmail}`
+    
+    divUser.addEventListener('click', () => {
+        divSession.classList.add('userSessionView');
+    });
+    
+    closeButton.addEventListener('click', () => {
+        divSession.classList.remove('userSessionView');
+    })
+}
+
+
+
+/******** CERRAR SESIÓN **********/
+
+const closeSession = document.querySelector('.closeSession');
+
+closeSession.addEventListener('click', () => {
+    // localStorage.clear();
+    alert('etasdc')
+    // window.location.href = '../../index.html';
+})
+

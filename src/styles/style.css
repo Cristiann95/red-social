@@ -16,11 +16,17 @@ ul {
 }
 
 .navBar {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 10px;
     padding-block: 8px;
     background-color: white;
+}
+
+h1 {
+    color: rgb(7, 82, 57);
+    margin-inline: 10px;
 }
 
 .searchForm {
@@ -42,22 +48,78 @@ ul {
 
 .results {
     position: absolute;
-    top: 10%;
+    top: 80%;
     width: 200px;
     background-color: white;
     border: 1px solid black;
     border-radius: 10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-h1 {
-    color: rgb(7, 82, 57);
-    margin-inline: 10px;
+.user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: rgb(7, 82, 57);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+    font-size: 25px;
+    border-radius: 50%;
+    cursor: pointer;
 }
+
+.userSession {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 300px;
+    background-color: rgb(106, 102, 102);
+    border-radius: 10px;
+    transform: translateX(-300px);
+    opacity: 0;
+    transition: all 0.5s ease ;
+    z-index: -1;
+}
+
+.userSessionView{
+    transform: translateX(0);
+    opacity: 1;
+    z-index: 1;
+}
+
+.ri-close-large-line {
+    display: block !important;
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    cursor: pointer;
+}
+.dataUser{
+    margin-block: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.closeSession{
+    background-color: rgb(228, 57, 57);
+}
+
+.closeSession:hover{
+    background-color: rgba(255, 0, 0, 0.454);
+}
+
 
 .container {
     display: flex;
     padding: 20px;
     gap: 20px;
+}
+
+h3 {
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .postSection {
@@ -196,5 +258,3 @@ label {
     width: 60%;
     margin: auto;
 }
-
-

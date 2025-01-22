@@ -4,50 +4,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./src/styles/login.css">
     <title>Red Social</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
 
 <body>
-
-    <header>
-        <nav class="navBar">
-            <h1>Red Social</h1>
-            <form class="searchForm">
-                <img class="iconSearch" src="./assets/bx-search-alt.svg" alt="Buscar">
-                <input class="nav_search" type="search" name="search" id="nav_search" placeholder="Buscar contacto">
-                <div class="results"></div>
-            </form>
-        </nav>
+    <header class="d-flex justify-content-between px-4 pt-2">
+        <h1>Red social</h1>
+        <button type="button" id="liveToastBtn" class="btn btn-outline-dark" data-bs-toggle="modal"
+            data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Iniciar sesión</button>
     </header>
-    <section class="container">
-        <aside class="publicity">
-            <h3>Publicidad</h3>
-            <ul id="productsList"></ul>
-        </aside>
-        <section class="postSection">
-            <h2>¿Qué estás pensando?</h2>
-            <form id="postForm">
-                <label for="postTitle">Título:</label>
-                <input type="text" id="postTitle" required>
-                <label for="postBody">Comentario: </label>
-                <textarea type="text" id="postBody" required></textarea>
-                <button type="submit">Enviar</button>
-            </form>
-            <ul id="postList"></ul>
-        </section>
-        <section class="contactSection">
-            <h3>Contactos</h3>
-            <ul id="contactsList"></ul>
-        </section>
+    <section class="containsImg">
+        <img class="img" src="./src/assets/social-media.png">
     </section>
 
-    <script src="script.js"></script>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Atención</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Solo hay que ingresar datos de simulación, cumpliendo con los requerimientos mínimos.
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="exampleModalLabel">Inicie sesión para ingresar</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm" action="" method="post" novalidate>
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Nombre:</label>
+                            <input type="text" class="form-control" name="name" id="name" required autocomplete="off">
+                            <div id="nameError" class="errorMessage"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="col-form-label">Email:</label>
+                            <input type="email" class="form-control" name="email" id="email" required
+                                autocomplete="off">
+                            <div id="emailError" class="errorMessage"></div>
+                        </div>
+                        <div class="mb-3">
+                            <div id="emailError" class="errorMessage"></div>
+                            <label for="password" class="col-form-label">Contraseña:</label>
+                            <input type="password" class="form-control" name="password" id="password" required
+                                autocomplete="off">
+                            <span id="show-hide">Show/Hide</span>
+                            <div id="passwordError" class="errorMessage"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="col-form-label">Confirmar contraseña:</label>
+                            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
+                                required autocomplete="off"></input>
+                            <div id="confirmPasswordError" class="errorMessage"></div>
+                        </div>
+                        <input type="submit" value="Ingresar">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./src/js/login.js"></script>
 </body>
 
 </html>
