@@ -16,12 +16,14 @@ ul {
 }
 
 .navBar {
-    position: relative;
+    position: fixed;
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 10px;
     padding-block: 8px;
     background-color: white;
+    z-index: 1;
 }
 
 h1 {
@@ -82,13 +84,13 @@ h1 {
     transform: translateX(-300px);
     opacity: 0;
     transition: all 0.5s ease ;
-    z-index: -1;
+    z-index: -100;
 }
 
 .userSessionView{
     transform: translateX(0);
     opacity: 1;
-    z-index: 1;
+    z-index: 2;
 }
 
 .ri-close-large-line {
@@ -114,6 +116,8 @@ h1 {
 
 .container {
     display: flex;
+    position: relative;
+    top: 50px;
     padding: 20px;
     gap: 20px;
 }
@@ -156,11 +160,13 @@ label {
 }
 
 #postTitle,
-#postBody {
+#postBody, .editTitle, .editBody {
     width: 100%;
+    max-width: 100%;
+    resize: vertical;
     padding: 10px;
     margin-bottom: 10px;
-    font-size: 20px;
+    font-size: 16px;
     border: 1px solid rgb(190, 183, 183);
     border-radius: 10px;
 }
@@ -177,8 +183,21 @@ label {
 
 .editForm {
     display: none;
+    flex-direction: column;
+    align-items: center;
     margin-top: 10px;
+    gap: 4px;
 }
+
+/* .editTitle, .editBody{
+    width: 90%;
+    padding: 3px;
+}
+
+.editBody{
+    resize: vertical;
+    height: 70px;
+} */
 
 .likes,
 .dislikes {

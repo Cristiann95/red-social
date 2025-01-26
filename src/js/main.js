@@ -2,6 +2,9 @@ const urlPosts = 'https://dummyjson.com/posts';
 const urlUsers = 'https://dummyjson.com/users';
 const urlProducts = 'https://dummyjson.com/carts';
 
+const userName = localStorage.getItem('name');
+const userEmail = localStorage.getItem('email');
+
 /******** POSTS **********/
 
 let posts = [];
@@ -14,11 +17,11 @@ function getData() {
             posts = data.posts;
             renderPostList();
             getUser();
+            showWelcome(userName);
         }).catch((error) => console.log('Error al llamar a la API: ', error))
 };
 
 getData();
-
 
 
 function renderPostList() {
@@ -39,9 +42,9 @@ function renderPostList() {
 
         <div id="editForm-${post.id}" class="editForm" style="display:none">
             <label for="editTitle-${post.id}">Título: </label>
-            <input type="text" id="editTitle-${post.id}" value="${post.title}" required>
+            <input type="text" id="editTitle-${post.id}" class="editTitle" value="${post.title}" required>
             <label for="editBody-${post.id}">Comentario: </label>
-            <textarea id="editBody-${post.id}" required>${post.body}</textarea>
+            <textarea id="editBody-${post.id}" class="editBody" required>${post.body}</textarea>
             <button onclick="updatePost(${post.id})">Actualizar</button>        
         </div>
         `
@@ -125,7 +128,7 @@ form.addEventListener('submit', function postData(event) {
 
 function editPost(id) {
     const editForm = document.getElementById(`editForm-${id}`);
-    editForm.style.display = (editForm.style.display == 'none') ? 'block' : 'none';
+    editForm.style.display = (editForm.style.display == 'none') ? 'flex' : 'none';
 }
 
 function updatePost(id) {
@@ -251,56 +254,99 @@ getProducts()
 const inputSearch = document.querySelector('#nav_search');
 const results = document.querySelector('.results');
 results.style.display = 'none';
-const ulResults = document.createElement('ul');
 
 inputSearch.addEventListener('keyup', () => {
-    const seachValue = inputSearch.value;
+    const searchValue = inputSearch.value;
     getContacts()
     let contactsList = contact.map(cont => `${cont.firstName} ${cont.lastName}`);
-    let filter = contactsList.filter(contact => contact.includes(seachValue));
-    ulResults.append(filter);
+    let filter = contactsList.filter(contact => contact.toLowerCase().includes(searchValue));
+    console.log(filter)
 
-    if (seachValue !== '') {
+
+    if (searchValue.length !== 0) {
         results.style.display = 'block';
         results.textContent = filter.join(', ');
     } else {
         results.textContent = '';
-        results.style.display = 'none';
+        results.style.display = 'None';
+    }
+    if (filter.length === 0) {
+        results.style.display = 'block';
+        results.textContent = 'No hay resultados';
     }
 })
+
+
+
+
+/******** MOSTRAR BIENVENIDA **********/
+
+
+function showWelcome(user) {
+    iziToast.show({
+        title: `Hola ${user}`,
+        position: 'topCenter',
+        timeout: 2000,
+        theme: 'dark',
+        close: false,
+        drag: true,
+        pauseOnHover: true,
+        progressBar: false,
+    });
+}
 
 /******** USUARIO **********/
 
 const divUser = document.querySelector('.user');
 
+
 function getUser() {
-    const userName = localStorage.getItem('name');
-    const userEmail = localStorage.getItem('email');
+    const divSession = document.querySelector('.userSession');
     const dataUser = document.querySelector('.dataUser');
     const closeButton = document.querySelector('.ri-close-large-line');
-    const divSession = document.querySelector('.userSession');
     const firstLetter = userName[0].toUpperCase();
+    closeSession.style.cursor = 'auto';
     divUser.textContent = firstLetter;
     dataUser.innerHTML = `<b>Usuario:</b>  ${userName} <br> <b>Email:</b>  ${userEmail}`
-    
+
     divUser.addEventListener('click', () => {
         divSession.classList.add('userSessionView');
+        closeSession.addEventListener('click', closeMessage);
+        closeSession.style.cursor = 'pointer';
     });
-    
+
     closeButton.addEventListener('click', () => {
         divSession.classList.remove('userSessionView');
+        closeSession.removeEventListener('click', closeMessage);
+        closeSession.style.cursor = 'auto';
     })
 }
-
-
 
 /******** CERRAR SESIÓN **********/
 
 const closeSession = document.querySelector('.closeSession');
 
-closeSession.addEventListener('click', () => {
-    // localStorage.clear();
-    alert('etasdc')
-    // window.location.href = '../../index.html';
-})
+function closeMessage() {
+    Swal.fire({
+        title: "¿Seguro que deseas cerrar sesión?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Hasta la próxima!",
+                icon: "success"
+            });
+            localStorage.clear();
+            setTimeout(() => {
+                window.location.href = '../../index.html';
+            }, 1500);
+        }
+    });
+}
+
 

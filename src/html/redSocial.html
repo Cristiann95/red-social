@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../node_modules/izitoast/dist/css/iziToast.min.css">
     <link rel="stylesheet" href="../styles/style.css">
     <title>Red Social</title>
 
@@ -20,7 +21,7 @@
             <h1>ComInline</h1>
             <form class="searchForm">
                 <img class="iconSearch" src="../assets/bx-search-alt.svg" alt="Buscar">
-                <input class="nav_search" type="search" name="search" id="nav_search" placeholder="Buscar contacto">
+                <input class="nav_search" type="search" name="search" id="nav_search" placeholder="Buscar contacto" autocomplete="off">
                 <div class="results"></div>
             </form>
             <div class="user"></div>
@@ -53,6 +54,8 @@
         </section>
     </section>
 
+    <script src="../../node_modules/izitoast/dist/js/iziToast.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/main.js"></script>
 </body>
 
