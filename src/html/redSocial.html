@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../src/assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../../node_modules/izitoast/dist/css/iziToast.min.css">
     <link rel="stylesheet" href="../styles/style.css">
     <title>Red Social</title>
@@ -18,7 +19,7 @@
 
     <header>
         <nav class="navBar">
-            <h1>ComInline</h1>
+            <a href="#start"><h1>ComInline</h1></a>
             <form class="searchForm">
                 <img class="iconSearch" src="../assets/bx-search-alt.svg" alt="Buscar">
                 <input class="nav_search" type="search" name="search" id="nav_search" placeholder="Buscar contacto" autocomplete="off">
@@ -38,7 +39,7 @@
             <ul id="productsList"></ul>
         </aside>
         <section class="postSection">
-            <h2>¿Qué estás pensando?</h2>
+            <h2 id="start">¿Qué estás pensando?</h2>
             <form id="postForm">
                 <label for="postTitle">Título:</label>
                 <input type="text" id="postTitle" required>

@@ -45,7 +45,7 @@ function renderPostList() {
             <input type="text" id="editTitle-${post.id}" class="editTitle" value="${post.title}" required>
             <label for="editBody-${post.id}">Comentario: </label>
             <textarea id="editBody-${post.id}" class="editBody" required>${post.body}</textarea>
-            <button onclick="updatePost(${post.id})">Actualizar</button>        
+            <button onclick="updatePost(${post.id}, ${post.reactions.likes}, ${post.reactions.dislikes})">Actualizar</button>        
         </div>
         `
 
@@ -61,7 +61,6 @@ function reactions(id, post, reaction) {
     icon.classList.toggle('icon_reaction');
 
     newLike = post + 1;
-    console.log(newLike)
     fetch(`${urlPosts}/${id}`, {
         method: 'PUT',
         body: JSON.stringify({
@@ -131,7 +130,7 @@ function editPost(id) {
     editForm.style.display = (editForm.style.display == 'none') ? 'flex' : 'none';
 }
 
-function updatePost(id) {
+function updatePost(id, likes, dislikes) {
     const editTitle = document.getElementById(`editTitle-${id}`).value;
     const editBody = document.getElementById(`editBody-${id}`).value;
 
@@ -142,6 +141,10 @@ function updatePost(id) {
             title: editTitle,
             body: editBody,
             userId: 1,
+            reactions: {
+                likes: likes,
+                dislikes: dislikes
+            }
         }),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -256,12 +259,11 @@ const results = document.querySelector('.results');
 results.style.display = 'none';
 
 inputSearch.addEventListener('keyup', () => {
-    const searchValue = inputSearch.value;
+    const searchValue = inputSearch.value.toLowerCase();
+    console.log(searchValue)
     getContacts()
     let contactsList = contact.map(cont => `${cont.firstName} ${cont.lastName}`);
     let filter = contactsList.filter(contact => contact.toLowerCase().includes(searchValue));
-    console.log(filter)
-
 
     if (searchValue.length !== 0) {
         results.style.display = 'block';
