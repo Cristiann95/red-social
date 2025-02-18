@@ -27,7 +27,7 @@ Este es un proyecto de una red social que permite a los usuarios crear una cuent
     Los usuarios pueden realizar una búsqueda de contactos a través de un campo de entrada (input search), que consulta la misma API para mostrar resultados relevantes.
     
 -   **Notificaciones:**  
-    Se implementaron notificaciones mediante las librerías `Izitoast`, `SweetAlert2`, y `Bootstrap` para brindar mensajes interactivos de éxito, error o advertencia, ofreciendo una experiencia más amigable.
+    Se implementaron notificaciones mediante las librerías `SweetAlert2`, y `Bootstrap` para brindar mensajes interactivos de éxito, error o advertencia, ofreciendo una experiencia más amigable.
     
 -   **Diseño responsive:**  
     La interfaz de usuario está diseñada para adaptarse a diferentes tamaños de pantalla, garantizando una experiencia de uso fluida en dispositivos móviles, tablets y escritorios.
@@ -38,7 +38,6 @@ Este es un proyecto de una red social que permite a los usuarios crear una cuent
 -   **HTML/CSS** para la estructura y diseño de la interfaz.
 -   **JavaScript** para la interacción dinámica en la página.
 -   **API externa** para obtener posteos y usuarios.
--   **Izitoast** para notificaciones de tipo toast.
 -   **SweetAlert2** para diálogos interactivos y alertas.
 
 ## Funcionalidades CRUD
@@ -56,19 +55,10 @@ Este es un proyecto de una red social que permite a los usuarios crear una cuent
     
 2.  Navega al directorio del proyecto:
     
-
-    
     `cd red-social` 
     
-3.   **Instala las dependencias necesarias**. Asegúrate de tener [Node.js](https://nodejs.org/) y [npm](https://www.npmjs.com/) instalados en tu máquina. Luego, corre el siguiente comando:
     
-
-    
-    `npm install` 
-    
-    Este comando instalará la librería `Izitoast` para que las funcionalidades de notificación y diseño funcionen correctamente.
-    
-4.   Una vez instaladas las dependencias, **abre el archivo `index.html`** en tu navegador para comenzar a probar el proyecto.
+3.   **Abre el archivo `index.html`** en tu navegador para comenzar a probar el proyecto.
     
 
 ## Notas Adicionales

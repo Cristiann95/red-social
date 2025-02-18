@@ -285,16 +285,22 @@ inputSearch.addEventListener('keyup', () => {
 
 
 function showWelcome(user) {
-    iziToast.show({
+
+    Swal.fire({
+        position: "top-end",
         title: `Hola ${user}`,
-        position: 'topCenter',
-        timeout: 2000,
+        showConfirmButton: false,
+        timer: 1500,
         theme: 'dark',
-        close: false,
-        drag: true,
-        pauseOnHover: true,
-        progressBar: false,
-    });
+        background: '#474545',
+        toast: true,
+        width: '12em',
+        position: 'top',
+        customClass: {
+            popup: 'welcome-popup',
+            title: 'welcome-title',        
+          }
+      });
 }
 
 /******** USUARIO **********/
